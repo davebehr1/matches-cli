@@ -23,11 +23,11 @@ func (wr *Writer) WriteToFile(filePath string, rankTable string) error {
 		return err
 	}
 	w := bufio.NewWriter(f)
-	n4, err := w.WriteString(rankTable)
+	_, err = w.WriteString(rankTable)
 	if err != nil {
 		return err
 	}
-	fmt.Printf("wrote %d bytes\n", n4)
+	fmt.Printf("wrote rank table to %s\n", filePath)
 
 	w.Flush()
 

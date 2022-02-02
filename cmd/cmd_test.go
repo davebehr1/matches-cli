@@ -1,10 +1,7 @@
 package cmd_test
 
 import (
-	"bufio"
 	"bytes"
-	"os"
-	"strings"
 	"testing"
 
 	"github.com/davebehr1/spanassessment/cmd"
@@ -15,13 +12,12 @@ import (
 )
 
 func TestCmd(t *testing.T) {
+	mocks := initMocks(t)
+
 	t.Run("Run the generate command without flags", func(t *testing.T) {
 		g := NewGomegaWithT(t)
-		ctrl := gomock.NewController(t)
-		ScanMatches := mocks.NewMockScanMatches(ctrl)
-		WriteMatches := mocks.NewMockWriteRankTable(ctrl)
 
-		ScanMatches.EXPECT().ScanFromStdin(gomock.Any()).Return([]*scanmatches.TeamRank{
+		mocks.scanner.EXPECT().ScanFromStdin(gomock.Any()).Return([]*scanmatches.TeamRank{
 			{
 				Team: "Lions",
 				Rank: 3,
@@ -31,7 +27,7 @@ func TestCmd(t *testing.T) {
 			}}, nil)
 
 		bf := new(bytes.Buffer)
-		RootCommand := cmd.Initialize(ScanMatches, WriteMatches)
+		RootCommand := cmd.Initialize(mocks.scanner, mocks.writer)
 		RootCommand.SetOut(bf)
 		RootCommand.SetErr(bf)
 		RootCommand.SetArgs([]string{"grt"})
@@ -42,11 +38,8 @@ func TestCmd(t *testing.T) {
 	})
 	t.Run("Run the generate command with file flag", func(t *testing.T) {
 		g := NewGomegaWithT(t)
-		ctrl := gomock.NewController(t)
-		ScanMatches := mocks.NewMockScanMatches(ctrl)
-		WriteMatches := mocks.NewMockWriteRankTable(ctrl)
 
-		ScanMatches.EXPECT().ScanFromFile(gomock.Any()).Return([]*scanmatches.TeamRank{
+		mocks.scanner.EXPECT().ScanFromFile(gomock.Any()).Return([]*scanmatches.TeamRank{
 			{
 				Team: "Lions",
 				Rank: 3,
@@ -56,7 +49,7 @@ func TestCmd(t *testing.T) {
 			}}, nil)
 
 		bf := new(bytes.Buffer)
-		RootCommand := cmd.Initialize(ScanMatches, WriteMatches)
+		RootCommand := cmd.Initialize(mocks.scanner, mocks.writer)
 		RootCommand.SetOut(bf)
 		RootCommand.SetErr(bf)
 		RootCommand.SetArgs([]string{"grt", "--f=matches.txt"})
@@ -69,12 +62,8 @@ func TestCmd(t *testing.T) {
 	t.Run("Run the generate command with incorrect flags", func(t *testing.T) {
 		g := NewGomegaWithT(t)
 
-		ctrl := gomock.NewController(t)
-		ScanMatches := mocks.NewMockScanMatches(ctrl)
-		WriteMatches := mocks.NewMockWriteRankTable(ctrl)
-
 		bf := new(bytes.Buffer)
-		RootCommand := cmd.Initialize(ScanMatches, WriteMatches)
+		RootCommand := cmd.Initialize(mocks.scanner, mocks.writer)
 		RootCommand.SetOut(bf)
 		RootCommand.SetErr(bf)
 		RootCommand.SetArgs([]string{"grt", "--d=matches.txt"})
@@ -86,11 +75,8 @@ func TestCmd(t *testing.T) {
 
 	t.Run("Run the generate command with file and output flag", func(t *testing.T) {
 		g := NewGomegaWithT(t)
-		ctrl := gomock.NewController(t)
-		ScanMatches := mocks.NewMockScanMatches(ctrl)
-		WriteRankTable := mocks.NewMockWriteRankTable(ctrl)
 
-		ScanMatches.EXPECT().ScanFromFile(gomock.Any()).Return([]*scanmatches.TeamRank{
+		mocks.scanner.EXPECT().ScanFromFile(gomock.Any()).Return([]*scanmatches.TeamRank{
 			{
 				Team: "Lions",
 				Rank: 3,
@@ -99,26 +85,32 @@ func TestCmd(t *testing.T) {
 				Rank: 3,
 			}}, nil)
 
-		WriteRankTable.EXPECT().WriteToFile(gomock.Any(), gomock.Any()).Return(nil)
+		mocks.writer.EXPECT().WriteToFile(gomock.Any(), gomock.Any()).Return(nil)
 
-		RootCommand := cmd.Initialize(ScanMatches, WriteRankTable)
+		RootCommand := cmd.Initialize(mocks.scanner, mocks.writer)
 
+		bf := new(bytes.Buffer)
+		RootCommand.SetOut(bf)
+		RootCommand.SetErr(bf)
 		RootCommand.SetArgs([]string{"grt", "--f=matches.txt", "--o=rankTable.txt"})
-		RootCommand.Execute()
-
-		file, err := os.Open("rankTable.txt")
+		err := RootCommand.Execute()
 		g.Expect(err).To(BeNil())
-
-		scanner := bufio.NewScanner(file)
-
-		scanner.Split(bufio.ScanLines)
-		var text []string
-
-		for scanner.Scan() {
-			text = append(text, scanner.Text())
-		}
-
-		g.Expect(strings.TrimSpace(strings.Join(text, " "))).To(Equal("1. Lions, 3 pts  2. Snakes, 3 pts"))
 	})
 
+}
+
+type Mocks struct {
+	scanner *mocks.MockScanMatches
+	writer  *mocks.MockWriteRankTable
+}
+
+func initMocks(t *testing.T) *Mocks {
+	ctrl := gomock.NewController(t)
+	ScanMatches := mocks.NewMockScanMatches(ctrl)
+	WriteMatches := mocks.NewMockWriteRankTable(ctrl)
+
+	return &Mocks{
+		scanner: ScanMatches,
+		writer:  WriteMatches,
+	}
 }
