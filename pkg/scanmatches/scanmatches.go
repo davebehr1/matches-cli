@@ -12,7 +12,7 @@ type StringReader interface {
 
 //go:generate mockgen -destination=../mocks/scanmatches_mock.go -package=mocks . ScanMatches
 type ScanMatches interface {
-	ScanFromFile(filePath string) ([]string, error)
+	ScanFromFile(filePath string) ([]TeamRank, error)
 	ScanFromStdin(reader StringReader) (string, error)
 }
 
@@ -32,7 +32,7 @@ func NewRankTable() RankTable {
 	return RankTable{Table: make(map[string]int)}
 }
 
-func (rankTable *RankTable) ScanFromFile(filePath string) ([]string, error) {
+func (rankTable *RankTable) ScanFromFile(filePath string) ([]TeamRank, error) {
 
 	file, err := os.Open(filePath)
 
@@ -52,7 +52,12 @@ func (rankTable *RankTable) ScanFromFile(filePath string) ([]string, error) {
 
 	file.Close()
 
-	return text, nil
+	for _, line := range text {
+		rankTable.Process(line)
+
+	}
+
+	return rankTable.Sort(), nil
 }
 
 func (rankTable *RankTable) ScanFromStdin(reader StringReader) (string, error) {

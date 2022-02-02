@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/davebehr1/spanassessment/pkg/scanmatches"
 	"github.com/spf13/cobra"
@@ -29,8 +28,12 @@ func NewGenerateRankTableCmd(scan scanmatches.ScanMatches) *cobra.Command {
 				if err != nil {
 					return err
 				}
+				var finalRankTable string
+				for _, team := range matches {
+					finalRankTable += fmt.Sprintf("%s,%d, \n", team.Team, team.Rank)
+				}
 
-				_, err = fmt.Fprint(cmd.OutOrStdout(), strings.Join(matches, ","))
+				_, err = fmt.Fprint(cmd.OutOrStdout(), finalRankTable)
 				if err != nil {
 					return err
 				}

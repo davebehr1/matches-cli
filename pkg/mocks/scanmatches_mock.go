@@ -35,10 +35,10 @@ func (m *MockScanMatches) EXPECT() *MockScanMatchesMockRecorder {
 }
 
 // ScanFromFile mocks base method.
-func (m *MockScanMatches) ScanFromFile(arg0 string) ([]string, error) {
+func (m *MockScanMatches) ScanFromFile(arg0 string) ([]scanmatches.TeamRank, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ScanFromFile", arg0)
-	ret0, _ := ret[0].([]string)
+	ret0, _ := ret[0].([]scanmatches.TeamRank)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
