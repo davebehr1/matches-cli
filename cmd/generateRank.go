@@ -29,8 +29,8 @@ func NewGenerateRankTableCmd(scan scanmatches.ScanMatches) *cobra.Command {
 					return err
 				}
 				var finalRankTable string
-				for _, team := range matches {
-					finalRankTable += fmt.Sprintf("%s,%d, \n", team.Team, team.Rank)
+				for index, team := range matches {
+					finalRankTable += fmt.Sprintf("%v. %s, %d pts \n", index+1, team.Team, team.Rank)
 				}
 
 				_, err = fmt.Fprint(cmd.OutOrStdout(), finalRankTable)
@@ -43,8 +43,8 @@ func NewGenerateRankTableCmd(scan scanmatches.ScanMatches) *cobra.Command {
 					return err
 				}
 				var finalRankTable string
-				for _, team := range matches {
-					finalRankTable += fmt.Sprintf("%s,%d, \n", team.Team, team.Rank)
+				for index, team := range matches {
+					finalRankTable += fmt.Sprintf("%v. %s, %d pts \n", index+1, team.Team, team.Rank)
 				}
 
 				_, err = fmt.Fprint(cmd.OutOrStdout(), finalRankTable)

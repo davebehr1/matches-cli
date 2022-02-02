@@ -17,7 +17,7 @@ func TestCmd(t *testing.T) {
 		ctrl := gomock.NewController(t)
 		ScanMatches := mocks.NewMockScanMatches(ctrl)
 
-		ScanMatches.EXPECT().ScanFromStdin(gomock.Any()).Return([]scanmatches.TeamRank{
+		ScanMatches.EXPECT().ScanFromStdin(gomock.Any()).Return([]*scanmatches.TeamRank{
 			{
 				Team: "Lions",
 				Rank: 3,
@@ -34,14 +34,14 @@ func TestCmd(t *testing.T) {
 		RootCommand.Execute()
 
 		result := bf.String()
-		g.Expect(result).To(Equal("Lions,3, \nSnakes,3, \n"))
+		g.Expect(result).To(Equal("1. Lions, 3 pts \n2. Snakes, 3 pts \n"))
 	})
 	t.Run("Run the generate command with flags", func(t *testing.T) {
 		g := NewGomegaWithT(t)
 		ctrl := gomock.NewController(t)
 		ScanMatches := mocks.NewMockScanMatches(ctrl)
 
-		ScanMatches.EXPECT().ScanFromFile(gomock.Any()).Return([]scanmatches.TeamRank{
+		ScanMatches.EXPECT().ScanFromFile(gomock.Any()).Return([]*scanmatches.TeamRank{
 			{
 				Team: "Lions",
 				Rank: 3,
@@ -58,7 +58,7 @@ func TestCmd(t *testing.T) {
 		RootCommand.Execute()
 
 		result := bf.String()
-		g.Expect(result).To(Equal("Lions,3, \nSnakes,3, \n"))
+		g.Expect(result).To(Equal("1. Lions, 3 pts \n2. Snakes, 3 pts \n"))
 	})
 
 	t.Run("Run the generate command with incorrect flags", func(t *testing.T) {
