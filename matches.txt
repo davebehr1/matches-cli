@@ -4,4 +4,4 @@ Lions 1, FC Awesome 1
 Tarantulas 3, Snakes 1
 Lions 4, Grouches 0
 Lions 3, Pumas 0
-Lions 3, Cheetas 0
+Lions 3, Cheetahs 0

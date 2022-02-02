@@ -21,24 +21,24 @@ func TestScanMatches(t *testing.T) {
 			PointTo(MatchFields(IgnoreExtras, Fields{
 				"Rank": Equal(11), "Team": Equal("Lions"),
 			})),
-			// PointTo(MatchAllFields(Fields{
-			// 	"Team": Equal("Tarantulas"), "Rank": Equal(6),
-			// })),
-			// PointTo(MatchAllFields(Fields{
-			// 	"Team": Equal("FC Awesome"), "Rank": Equal(1),
-			// })),
-			// PointTo(MatchAllFields(Fields{
-			// 	"Team": Equal("Snakes"), "Rank": Equal(1),
-			// })),
-			// PointTo(MatchAllFields(Fields{
-			// 	"Team": Equal("Grouches"), "Rank": Equal(0),
-			// })),
-			// PointTo(MatchAllFields(Fields{
-			// 	"Team": Equal("Pumas"), "Rank": Equal(0),
-			// })),
-			// PointTo(MatchAllFields(Fields{
-			// 	"Team": Equal("Cheetas"), "Rank": Equal(0),
-			// })),
+			PointTo(MatchAllFields(Fields{
+				"Team": Equal("Tarantulas"), "Rank": Equal(6),
+			})),
+			PointTo(MatchAllFields(Fields{
+				"Team": Equal("FC Awesome"), "Rank": Equal(1),
+			})),
+			PointTo(MatchAllFields(Fields{
+				"Team": Equal("Snakes"), "Rank": Equal(1),
+			})),
+			PointTo(MatchAllFields(Fields{
+				"Team": Equal("Grouches"), "Rank": Equal(0),
+			})),
+			PointTo(MatchAllFields(Fields{
+				"Team": Equal("Pumas"), "Rank": Equal(0),
+			})),
+			PointTo(MatchAllFields(Fields{
+				"Team": Equal("Cheetahs"), "Rank": Equal(0),
+			})),
 		))
 
 	})
@@ -46,8 +46,17 @@ func TestScanMatches(t *testing.T) {
 		g := NewGomegaWithT(t)
 		rankTable := scanmatches.NewRankTable()
 
-		match, err := rankTable.ScanFromStdin(bytes.NewBufferString("Lions 3, Cheetas 0 \n"))
+		matches, err := rankTable.ScanFromStdin(bytes.NewBufferString("Lions 3, Cheetahs 0 \ndone\n"))
 		g.Expect(err).To(BeNil())
-		g.Expect(match).To(Equal("Lions 3, Cheetas 0 \n"))
+		g.Expect(len(matches)).To(Equal(2))
+
+		g.Expect(matches).To(ContainElements(
+			PointTo(MatchFields(IgnoreExtras, Fields{
+				"Team": Equal("Lions"), "Rank": Equal(3),
+			})),
+			PointTo(MatchAllFields(Fields{
+				"Team": Equal("Cheetahs"), "Rank": Equal(0),
+			})),
+		))
 	})
 }

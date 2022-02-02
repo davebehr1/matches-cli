@@ -13,13 +13,13 @@ func TestSort(t *testing.T) {
 	rankTable := scanmatches.NewRankTable()
 	rankTable.Table["Lions"] = 6
 	rankTable.Table["Snakes"] = 1
-	rankTable.Table["Cheetas"] = 11
+	rankTable.Table["Cheetahs"] = 11
 	rankTable.Table["Pumas"] = 0
 	rankTable.Table["Grouches"] = 0
 
 	rank := rankTable.Sort()
 	g.Expect(rank).To(Equal([]scanmatches.TeamRank{{
-		Team: "Cheetas",
+		Team: "Cheetahs",
 		Rank: 11,
 	}, {
 		Team: "Lions",

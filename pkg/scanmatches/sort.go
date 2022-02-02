@@ -10,11 +10,11 @@ type TeamRank struct {
 	Rank int
 }
 
-func (rankTable *RankTable) Sort() []TeamRank {
+func (rankTable *RankTable) Sort() []*TeamRank {
 
-	var ss []TeamRank
+	var ss []*TeamRank
 	for k, v := range rankTable.Table {
-		ss = append(ss, TeamRank{k, v})
+		ss = append(ss, &TeamRank{k, v})
 	}
 
 	sort.Slice(ss, func(i, j int) bool {

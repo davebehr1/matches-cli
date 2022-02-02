@@ -14,8 +14,8 @@ type StringReader interface {
 
 //go:generate mockgen -destination=../mocks/scanmatches_mock.go -package=mocks . ScanMatches
 type ScanMatches interface {
-	ScanFromFile(filePath string) ([]TeamRank, error)
-	ScanFromStdin(reader StringReader) ([]TeamRank, error)
+	ScanFromFile(filePath string) ([]*TeamRank, error)
+	ScanFromStdin(reader StringReader) ([]*TeamRank, error)
 }
 
 func ReadMatch(r StringReader) (string, error) {
@@ -34,7 +34,7 @@ func NewRankTable() RankTable {
 	return RankTable{Table: make(map[string]int)}
 }
 
-func (rankTable *RankTable) ScanFromFile(filePath string) ([]TeamRank, error) {
+func (rankTable *RankTable) ScanFromFile(filePath string) ([]*TeamRank, error) {
 
 	file, err := os.Open(filePath)
 
@@ -62,7 +62,7 @@ func (rankTable *RankTable) ScanFromFile(filePath string) ([]TeamRank, error) {
 	return rankTable.Sort(), nil
 }
 
-func (rankTable *RankTable) ScanFromStdin(reader StringReader) ([]TeamRank, error) {
+func (rankTable *RankTable) ScanFromStdin(reader StringReader) ([]*TeamRank, error) {
 	for {
 		fmt.Printf("Enter Match Result: ")
 		text, err := reader.ReadString('\n')
