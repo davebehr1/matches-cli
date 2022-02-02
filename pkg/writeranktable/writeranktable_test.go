@@ -1,4 +1,4 @@
-package writematches_test
+package writeranktable_test
 
 import (
 	"bufio"
@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/davebehr1/spanassessment/pkg/scanmatches"
-	"github.com/davebehr1/spanassessment/pkg/writematches"
+	"github.com/davebehr1/spanassessment/pkg/writeranktable"
 	. "github.com/onsi/gomega"
 )
 
@@ -15,7 +15,7 @@ func TestWriteRanktable(t *testing.T) {
 	g := NewGomegaWithT(t)
 	outputFilepath := "../ranktable_test.txt"
 
-	writer := writematches.NewWriter()
+	writer := writeranktable.NewWriter()
 	rankTable := scanmatches.NewRankTable()
 	matches, err := rankTable.ScanFromFile("../../matches.txt")
 	g.Expect(err).To(BeNil())

@@ -107,10 +107,10 @@ type Mocks struct {
 func initMocks(t *testing.T) *Mocks {
 	ctrl := gomock.NewController(t)
 	ScanMatches := mocks.NewMockScanMatches(ctrl)
-	WriteMatches := mocks.NewMockWriteRankTable(ctrl)
+	WriteRankTable := mocks.NewMockWriteRankTable(ctrl)
 
 	return &Mocks{
 		scanner: ScanMatches,
-		writer:  WriteMatches,
+		writer:  WriteRankTable,
 	}
 }

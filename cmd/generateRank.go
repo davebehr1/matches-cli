@@ -6,11 +6,11 @@ import (
 	"os"
 
 	"github.com/davebehr1/spanassessment/pkg/scanmatches"
-	"github.com/davebehr1/spanassessment/pkg/writematches"
+	"github.com/davebehr1/spanassessment/pkg/writeranktable"
 	"github.com/spf13/cobra"
 )
 
-func NewGenerateRankTableCmd(scan scanmatches.ScanMatches, write writematches.WriteRankTable) *cobra.Command {
+func NewGenerateRankTableCmd(scan scanmatches.ScanMatches, write writeranktable.WriteRankTable) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "generateranktable",
 		Aliases: []string{"grt"},

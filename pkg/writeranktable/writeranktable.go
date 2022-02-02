@@ -1,4 +1,4 @@
-package writematches
+package writeranktable
 
 import (
 	"bufio"
