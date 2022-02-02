@@ -20,11 +20,16 @@ func NewGenerateRankTableCmd() *cobra.Command {
 				if err != nil {
 					return err
 				}
-				fmt.Fprintf(cmd.OutOrStdout(), filePath)
+				_, err = fmt.Fprint(cmd.OutOrStdout(), filePath)
+				if err != nil {
+					return err
+				}
 			} else {
-				var result string
-				result = "matches from stdin"
-				fmt.Fprintf(cmd.OutOrStdout(), result)
+				result := "matches from stdin"
+				_, err := fmt.Fprint(cmd.OutOrStdout(), result)
+				if err != nil {
+					return err
+				}
 			}
 			return nil
 		},
