@@ -4,7 +4,7 @@
 
 
 ```
-This simple cli is used to load match resuts via a file or stdin to generate a rank table.
+This simple cli is used to load match results via a file or stdin to generate a rank table.
 Rules:
   * if a team has won a game they get 3 points
   * if they draw they get one point
