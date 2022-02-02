@@ -1,5 +1,6 @@
 # spanassessment
 
+[![Go](https://github.com/davebehr1/spanassessment/actions/workflows/go.yml/badge.svg?branch=master)](https://github.com/davebehr1/spanassessment/actions/workflows/go.yml)
 
 ## Run tests:
   make test
