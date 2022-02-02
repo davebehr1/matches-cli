@@ -22,5 +22,7 @@ func Execute() {
 func Initialize() *cobra.Command {
 	RootCommand := NewRootCmd()
 
+	RootCommand.AddCommand(NewGenerateRankTableCmd())
+
 	return RootCommand
 }
