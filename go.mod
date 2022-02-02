@@ -3,6 +3,7 @@ module github.com/davebehr1/spanassessment
 go 1.17
 
 require (
+	github.com/golang/mock v1.6.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/onsi/gomega v1.18.1 // indirect
 	github.com/spf13/cobra v1.3.0 // indirect

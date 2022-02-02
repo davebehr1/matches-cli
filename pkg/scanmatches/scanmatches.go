@@ -10,6 +10,7 @@ type StringReader interface {
 	ReadString(delim byte) (string, error)
 }
 
+//go:generate mockgen -destination=../mocks/scanmatches_mock.go -package=mocks . ScanMatches
 type ScanMatches interface {
 	ScanFromFile(filePath string) ([]string, error)
 	ScanFromStdin(reader StringReader) (string, error)
