@@ -1,5 +1,4 @@
 # spanassessment
-![example workflow](https://github.com/davebehr1/spanassessment/workflows/go.yml/badge.svg)
 
 
 ## Run tests:
