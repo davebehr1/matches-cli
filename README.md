@@ -26,11 +26,16 @@ Rules:
 
 *   ### generateranktable / grt:
      *  Flags:
-        * --f / the file with match results
+        * --f / the file with match results / 
+          * if you run the cli without this command you will be prompted for input
+        * --o / the file the rank table will be written to / 
+          * if you run the cli without this flag output will be written to stdout
         * --help / help
-
+     
      *   Example:
            *  go run main.go grt --f=matches.txt
+           *  go run main.go grt --f=matches.txt --o=ranktable.txt
+           *  go run main.go grt --o=ranktable.txt
            *  go run main.go grt
               * you will get a prompt ```Enter Match Result:``` enter the match result in the format ```cheetahs 1, bulls 2```
               * to conclude entering in match results and see the final rank table type in ```done``` at the next prompt
