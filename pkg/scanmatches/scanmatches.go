@@ -18,14 +18,6 @@ type ScanMatches interface {
 	ScanFromStdin(reader StringReader) ([]*TeamRank, error)
 }
 
-func ReadMatch(r StringReader) (string, error) {
-	match, err := r.ReadString('\n')
-	if err != nil {
-		return "", err
-	}
-	return match, nil
-}
-
 type RankTable struct {
 	Table map[string]int
 }
