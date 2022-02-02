@@ -19,7 +19,7 @@ func TestScanMatches(t *testing.T) {
 
 		g.Expect(matches).To(ContainElements(
 			PointTo(MatchFields(IgnoreExtras, Fields{
-				"Rank": Equal(11), "Team": Equal("Lions"),
+				"Team": Equal("Lions"), "Rank": Equal(11),
 			})),
 			PointTo(MatchAllFields(Fields{
 				"Team": Equal("Tarantulas"), "Rank": Equal(6),

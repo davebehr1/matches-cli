@@ -28,10 +28,10 @@ func TestSort(t *testing.T) {
 		Team: "Snakes",
 		Rank: 1,
 	}, {
-		Team: "Pumas",
+		Team: "Grouches",
 		Rank: 0,
 	}, {
-		Team: "Grouches",
+		Team: "Pumas",
 		Rank: 0,
 	}}))
 

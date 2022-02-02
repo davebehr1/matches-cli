@@ -12,22 +12,22 @@ type TeamRank struct {
 
 func (rankTable *RankTable) Sort() []*TeamRank {
 
-	var ss []*TeamRank
+	var teamRanks []*TeamRank
 	for k, v := range rankTable.Table {
-		ss = append(ss, &TeamRank{k, v})
+		teamRanks = append(teamRanks, &TeamRank{k, v})
 	}
 
-	sort.Slice(ss, func(i, j int) bool {
-		return ss[i].Rank > ss[j].Rank
+	sort.Slice(teamRanks, func(i, j int) bool {
+		return teamRanks[i].Rank > teamRanks[j].Rank
 	})
 
-	sort.Slice(ss, func(i, j int) bool {
-		if ss[i].Team == ss[j].Team {
-			return strings.ToLower(ss[i].Team[:1]) < strings.ToLower(ss[j].Team[:1])
+	sort.Slice(teamRanks, func(i, j int) bool {
+		if teamRanks[i].Rank == teamRanks[j].Rank {
+			return strings.ToLower(teamRanks[i].Team[:1]) < strings.ToLower(teamRanks[j].Team[:1])
 		}
 		return false
 
 	})
 
-	return ss
+	return teamRanks
 }
