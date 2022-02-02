@@ -38,4 +38,19 @@ func TestCmd(t *testing.T) {
 		g.Expect(result).To(Equal("matches.txt"))
 	})
 
+	t.Run("Run the generate command with incorrect flags", func(t *testing.T) {
+		g := NewGomegaWithT(t)
+
+		bf := new(bytes.Buffer)
+
+		RootCommand := cmd.Initialize()
+		RootCommand.SetOut(bf)
+		RootCommand.SetErr(bf)
+		RootCommand.SetArgs([]string{"grt", "--d=matches.txt"})
+		RootCommand.Execute()
+
+		result := bf.String()
+		g.Expect(result).To(ContainSubstring("unknown flag"))
+	})
+
 }
