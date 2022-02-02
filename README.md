@@ -33,3 +33,4 @@ Rules:
            *  Go run main.go grt --f=matches.txt’
            *  Go run main.go grt
               * you will get a prompt ```Enter Match Result:``` enter the match result in the format ```cheetahs 1, bulls 2```
+              * to conclude entering in match results and see the final rank table type in ```done``` at the next prompt
