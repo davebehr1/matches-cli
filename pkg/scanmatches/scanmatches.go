@@ -2,8 +2,10 @@ package scanmatches
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 type StringReader interface {
@@ -13,7 +15,7 @@ type StringReader interface {
 //go:generate mockgen -destination=../mocks/scanmatches_mock.go -package=mocks . ScanMatches
 type ScanMatches interface {
 	ScanFromFile(filePath string) ([]TeamRank, error)
-	ScanFromStdin(reader StringReader) (string, error)
+	ScanFromStdin(reader StringReader) ([]TeamRank, error)
 }
 
 func ReadMatch(r StringReader) (string, error) {
@@ -60,10 +62,18 @@ func (rankTable *RankTable) ScanFromFile(filePath string) ([]TeamRank, error) {
 	return rankTable.Sort(), nil
 }
 
-func (rankTable *RankTable) ScanFromStdin(reader StringReader) (string, error) {
-	text, err := reader.ReadString('\n')
-	if err != nil {
-		return "", err
+func (rankTable *RankTable) ScanFromStdin(reader StringReader) ([]TeamRank, error) {
+	for {
+		fmt.Printf("Enter Match Result: ")
+		text, err := reader.ReadString('\n')
+		if err != nil {
+			return nil, err
+		}
+		if strings.TrimSpace(text) == "done" {
+			break
+		} else {
+			rankTable.Process(strings.TrimSpace(text))
+		}
 	}
-	return text, nil
+	return rankTable.Sort(), nil
 }

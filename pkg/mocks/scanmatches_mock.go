@@ -50,10 +50,10 @@ func (mr *MockScanMatchesMockRecorder) ScanFromFile(arg0 interface{}) *gomock.Ca
 }
 
 // ScanFromStdin mocks base method.
-func (m *MockScanMatches) ScanFromStdin(arg0 scanmatches.StringReader) (string, error) {
+func (m *MockScanMatches) ScanFromStdin(arg0 scanmatches.StringReader) ([]scanmatches.TeamRank, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ScanFromStdin", arg0)
-	ret0, _ := ret[0].(string)
+	ret0, _ := ret[0].([]scanmatches.TeamRank)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

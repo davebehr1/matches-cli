@@ -38,12 +38,16 @@ func NewGenerateRankTableCmd(scan scanmatches.ScanMatches) *cobra.Command {
 					return err
 				}
 			} else {
-				match, err := scan.ScanFromStdin(bufio.NewReader(os.Stdin))
+				matches, err := scan.ScanFromStdin(bufio.NewReader(os.Stdin))
 				if err != nil {
 					return err
 				}
+				var finalRankTable string
+				for _, team := range matches {
+					finalRankTable += fmt.Sprintf("%s,%d, \n", team.Team, team.Rank)
+				}
 
-				_, err = fmt.Fprint(cmd.OutOrStdout(), match)
+				_, err = fmt.Fprint(cmd.OutOrStdout(), finalRankTable)
 				if err != nil {
 					return err
 				}
