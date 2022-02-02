@@ -6,13 +6,13 @@ import (
 	"os"
 )
 
-type ScanMatches interface {
-	ScanFromFile(filePath string) ([]string, error)
-	ScanFromStdin(reader *bufio.Reader) (string, error)
-}
-
 type StringReader interface {
 	ReadString(delim byte) (string, error)
+}
+
+type ScanMatches interface {
+	ScanFromFile(filePath string) ([]string, error)
+	ScanFromStdin(reader StringReader) (string, error)
 }
 
 func ReadMatch(r StringReader) (string, error) {
@@ -31,7 +31,7 @@ func NewRankTable() RankTable {
 	return RankTable{Table: make(map[string]int)}
 }
 
-func (rankTable *RankTable) ReadFromFile(filePath string) ([]string, error) {
+func (rankTable *RankTable) ScanFromFile(filePath string) ([]string, error) {
 
 	file, err := os.Open(filePath)
 
@@ -54,7 +54,7 @@ func (rankTable *RankTable) ReadFromFile(filePath string) ([]string, error) {
 	return text, nil
 }
 
-func (rankTable *RankTable) ReadFromStdin(reader StringReader) (string, error) {
+func (rankTable *RankTable) ScanFromStdin(reader StringReader) (string, error) {
 	text, err := reader.ReadString('\n')
 	if err != nil {
 		return "", err

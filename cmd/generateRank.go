@@ -1,12 +1,15 @@
 package cmd
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 
+	"github.com/davebehr1/spanassessment/pkg/scanmatches"
 	"github.com/spf13/cobra"
 )
 
-func NewGenerateRankTableCmd() *cobra.Command {
+func NewGenerateRankTableCmd(scan scanmatches.ScanMatches) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "generateranktable",
 		Aliases: []string{"grt"},
@@ -21,12 +24,22 @@ func NewGenerateRankTableCmd() *cobra.Command {
 					return err
 				}
 				_, err = fmt.Fprint(cmd.OutOrStdout(), filePath)
+				_, err = scan.ScanFromFile(filePath)
+				if err != nil {
+					return err
+				}
+
+				_, err = fmt.Fprint(cmd.OutOrStdout(), filePath)
 				if err != nil {
 					return err
 				}
 			} else {
-				result := "matches from stdin"
-				_, err := fmt.Fprint(cmd.OutOrStdout(), result)
+				match, err := scan.ScanFromStdin(bufio.NewReader(os.Stdin))
+				if err != nil {
+					return err
+				}
+
+				_, err = fmt.Fprint(cmd.OutOrStdout(), match)
 				if err != nil {
 					return err
 				}

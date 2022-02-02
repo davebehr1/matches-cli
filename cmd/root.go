@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/davebehr1/spanassessment/pkg/scanmatches"
 	"github.com/spf13/cobra"
 )
 
@@ -19,10 +20,10 @@ func Execute() {
 	cobra.CheckErr(RootCommand.Execute())
 }
 
-func Initialize() *cobra.Command {
+func Initialize(scan scanmatches.ScanMatches) *cobra.Command {
 	RootCommand := NewRootCmd()
 
-	RootCommand.AddCommand(NewGenerateRankTableCmd())
+	RootCommand.AddCommand(NewGenerateRankTableCmd(scan))
 
 	return RootCommand
 }

@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/davebehr1/spanassessment/cmd"
+	"github.com/davebehr1/spanassessment/pkg/scanmatches"
 	. "github.com/onsi/gomega"
 )
 
@@ -14,7 +15,9 @@ func TestCmd(t *testing.T) {
 
 		bf := new(bytes.Buffer)
 
-		RootCommand := cmd.Initialize()
+		rankTable := scanmatches.NewRankTable()
+
+		RootCommand := cmd.Initialize(&rankTable)
 		RootCommand.SetOut(bf)
 		RootCommand.SetErr(bf)
 		RootCommand.SetArgs([]string{"grt"})
@@ -27,8 +30,9 @@ func TestCmd(t *testing.T) {
 		g := NewGomegaWithT(t)
 
 		bf := new(bytes.Buffer)
+		rankTable := scanmatches.NewRankTable()
 
-		RootCommand := cmd.Initialize()
+		RootCommand := cmd.Initialize(&rankTable)
 		RootCommand.SetOut(bf)
 		RootCommand.SetErr(bf)
 		RootCommand.SetArgs([]string{"grt", "--f=matches.txt"})
@@ -43,7 +47,9 @@ func TestCmd(t *testing.T) {
 
 		bf := new(bytes.Buffer)
 
-		RootCommand := cmd.Initialize()
+		rankTable := scanmatches.NewRankTable()
+
+		RootCommand := cmd.Initialize(&rankTable)
 		RootCommand.SetOut(bf)
 		RootCommand.SetErr(bf)
 		RootCommand.SetArgs([]string{"grt", "--d=matches.txt"})
