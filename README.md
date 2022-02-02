@@ -13,4 +13,4 @@
 
      *   Example:
            *  Go run main.go grt --f=matches.txt’
-           *  Go run main.go grt’
+           *  Go run main.go grt
