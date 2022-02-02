@@ -26,11 +26,21 @@ Rules:
 
 *   ### generateranktable / grt:
      *  Flags:
-        * --f
-        * --help / help for command
+        * --f / the file with match results
+        * --help / help
 
      *   Example:
-           *  go run main.go grt --f=matches.txt’
+           *  go run main.go grt --f=matches.txt
            *  go run main.go grt
               * you will get a prompt ```Enter Match Result:``` enter the match result in the format ```cheetahs 1, bulls 2```
               * to conclude entering in match results and see the final rank table type in ```done``` at the next prompt
+     * Excample Result:
+     ```
+     1. Lions, 11 pts 
+     2. Tarantulas, 6 pts 
+     3. FC Awesome, 1 pts 
+     4. Snakes, 1 pts 
+     5. Cheetahs, 0 pts 
+     6. Grouches, 0 pts 
+     7. Pumas, 0 pts 
+     ```
