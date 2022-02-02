@@ -18,7 +18,7 @@ func TestSort(t *testing.T) {
 	rankTable.Table["Grouches"] = 0
 
 	rank := rankTable.Sort()
-	g.Expect(rank).To(Equal([]scanmatches.TeamRank{{
+	g.Expect(rank).To(Equal([]*scanmatches.TeamRank{{
 		Team: "Cheetahs",
 		Rank: 11,
 	}, {
