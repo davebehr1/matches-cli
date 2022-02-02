@@ -1,4 +1,4 @@
 test: 
 	go test -short -v ./... -count=1
-
-.PHONY: test
+docker:
+	docker build -t matchescli .
