@@ -1,9 +1,9 @@
-package process_test
+package scanmatches_test
 
 import (
 	"testing"
 
-	"github.com/davebehr1/spanassessment/pkg/process"
+	"github.com/davebehr1/spanassessment/pkg/scanmatches"
 	. "github.com/onsi/gomega"
 )
 
@@ -29,9 +29,10 @@ func TestProcessMatch(t *testing.T) {
 	} {
 		t.Run(test.input, func(t *testing.T) {
 			g := NewGomegaWithT(t)
-			result, err := process.Process(test.input)
+			table := scanmatches.RankTable{Table: make(map[string]int)}
+			err := table.Process(test.input)
 			g.Expect(err).To(BeNil())
-			g.Expect(result).To(Equal(test.winningTeam))
+			g.Expect(len(table.Table)).To(Equal(2))
 		})
 	}
 

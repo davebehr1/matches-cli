@@ -49,6 +49,6 @@ func NewGenerateRankTableCmd(scan scanmatches.ScanMatches) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().String("f", "", "macthes.txt")
+	cmd.Flags().String("f", "", "matches.txt")
 	return cmd
 }

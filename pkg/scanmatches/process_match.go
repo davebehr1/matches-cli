@@ -1,11 +1,11 @@
-package process
+package scanmatches
 
 import (
 	"strconv"
 	"strings"
 )
 
-func Process(matchResult string) (string, error) {
+func (rankTable *RankTable) Process(matchResult string) error {
 	results := strings.Split(matchResult, ",")
 
 	for key, result := range results {
@@ -26,23 +26,27 @@ func Process(matchResult string) (string, error) {
 
 	teamOneScore, err := strconv.Atoi(strings.Trim(teamOneResult[1], " "))
 	if err != nil {
-		return "", err
+		return err
 	}
 	teamTwoScore, err := strconv.Atoi(strings.Trim(teamTwoResult[1], " "))
 	if err != nil {
-		return "", err
+		return err
 	}
 
 	if teamOneScore > teamTwoScore {
-		return teamOneResult[0], nil
+
+		rankTable.Table[teamOneResult[0]] += 3
+		rankTable.Table[teamTwoResult[0]] += 0
 
 	} else if teamTwoScore > teamOneScore {
 
-		return teamTwoResult[0], nil
+		rankTable.Table[teamTwoResult[0]] += 3
+		rankTable.Table[teamOneResult[0]] += 0
 
 	} else if teamTwoScore == teamOneScore {
-		return "draw", nil
+		rankTable.Table[teamOneResult[0]] += 1
+		rankTable.Table[teamTwoResult[0]] += 1
 	}
-	return "", nil
+	return nil
 
 }
