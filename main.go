@@ -10,5 +10,8 @@ func main() {
 	scanner := scanmatches.NewRankTable()
 	writer := writeranktable.NewWriter()
 	root := cmd.Initialize(&scanner, &writer)
-	root.Execute()
+	err := root.Execute()
+	if err != nil {
+		panic(err)
+	}
 }

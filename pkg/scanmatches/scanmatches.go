@@ -47,7 +47,8 @@ func (rankTable *RankTable) ScanFromFile(filePath string) ([]*TeamRank, error) {
 	file.Close()
 
 	for _, line := range text {
-		rankTable.Process(line)
+		err := rankTable.Process(line)
+		return nil, err
 
 	}
 
@@ -64,7 +65,10 @@ func (rankTable *RankTable) ScanFromStdin(reader StringReader) ([]*TeamRank, err
 		if strings.TrimSpace(text) == "done" {
 			break
 		} else {
-			rankTable.Process(strings.TrimSpace(text))
+			err := rankTable.Process(strings.TrimSpace(text))
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 	return rankTable.Sort(), nil

@@ -24,8 +24,8 @@ func TestGenerateRankTableCli(t *testing.T) {
 		RootCommand.SetOut(bf)
 		RootCommand.SetErr(bf)
 		RootCommand.SetArgs([]string{"grt", "--f=../../matches.txt"})
-		RootCommand.Execute()
-		RootCommand.Execute()
+		err := RootCommand.Execute()
+		g.Expect(err).To(BeNil())
 
 		result := bf.String()
 		g.Expect(result).To(Equal("1. Lions, 11 pts \n2. Tarantulas, 6 pts \n3. FC Awesome, 1 pts \n4. Snakes, 1 pts \n5. Cheetahs, 0 pts \n6. Grouches, 0 pts \n7. Pumas, 0 pts \n1. Lions, 22 pts \n2. Tarantulas, 12 pts \n3. FC Awesome, 2 pts \n4. Snakes, 2 pts \n5. Cheetahs, 0 pts \n6. Grouches, 0 pts \n7. Pumas, 0 pts \n"))
@@ -38,7 +38,8 @@ func TestGenerateRankTableCli(t *testing.T) {
 
 		RootCommand := cmd.Initialize(&scanner, &writer)
 		RootCommand.SetArgs([]string{"grt", "--f=../../matches.txt", fmt.Sprintf("--o=%s", outputFilepath)})
-		RootCommand.Execute()
+		err := RootCommand.Execute()
+		g.Expect(err).To(BeNil())
 
 		file, err := os.Open(outputFilepath)
 		g.Expect(err).To(BeNil())
@@ -72,7 +73,8 @@ func TestGenerateRankTableCli(t *testing.T) {
 		RootCommand.SetIn(bytes.NewBufferString("Lions 3, Cheetahs 0 \ndone\n"))
 		RootCommand.SetErr(bf)
 		RootCommand.SetArgs([]string{"grt"})
-		RootCommand.Execute()
+		err := RootCommand.Execute()
+		g.Expect(err).To(BeNil())
 
 		result := bf.String()
 		g.Expect(result).To(Equal("1. Lions, 3 pts \n2. Cheetahs, 0 pts \n"))
@@ -86,7 +88,8 @@ func TestGenerateRankTableCli(t *testing.T) {
 		RootCommand := cmd.Initialize(&scanner, &writer)
 		RootCommand.SetIn(bytes.NewBufferString("Lions 3, Cheetahs 0 \ndone\n"))
 		RootCommand.SetArgs([]string{"grt", fmt.Sprintf("--o=%s", outputFilepath)})
-		RootCommand.Execute()
+		err := RootCommand.Execute()
+		g.Expect(err).To(BeNil())
 
 		file, err := os.Open(outputFilepath)
 		g.Expect(err).To(BeNil())

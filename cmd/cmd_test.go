@@ -31,7 +31,8 @@ func TestCmd(t *testing.T) {
 		RootCommand.SetOut(bf)
 		RootCommand.SetErr(bf)
 		RootCommand.SetArgs([]string{"generateranktable"})
-		RootCommand.Execute()
+		err := RootCommand.Execute()
+		g.Expect(err).To(BeNil())
 
 		result := bf.String()
 		g.Expect(result).To(Equal("1. Lions, 3 pts \n2. Snakes, 3 pts \n"))
@@ -53,7 +54,8 @@ func TestCmd(t *testing.T) {
 		RootCommand.SetOut(bf)
 		RootCommand.SetErr(bf)
 		RootCommand.SetArgs([]string{"grt"})
-		RootCommand.Execute()
+		err := RootCommand.Execute()
+		g.Expect(err).To(BeNil())
 
 		result := bf.String()
 		g.Expect(result).To(Equal("1. Lions, 3 pts \n2. Snakes, 3 pts \n"))
@@ -75,7 +77,8 @@ func TestCmd(t *testing.T) {
 		RootCommand.SetOut(bf)
 		RootCommand.SetErr(bf)
 		RootCommand.SetArgs([]string{"generateranktable", "--f=matches.txt"})
-		RootCommand.Execute()
+		err := RootCommand.Execute()
+		g.Expect(err).To(BeNil())
 
 		result := bf.String()
 		g.Expect(result).To(Equal("1. Lions, 3 pts \n2. Snakes, 3 pts \n"))
@@ -89,7 +92,8 @@ func TestCmd(t *testing.T) {
 		RootCommand.SetOut(bf)
 		RootCommand.SetErr(bf)
 		RootCommand.SetArgs([]string{"generateranktable", "--d=matches.txt"})
-		RootCommand.Execute()
+		err := RootCommand.Execute()
+		g.Expect(err).ToNot(BeNil())
 
 		result := bf.String()
 		g.Expect(result).To(ContainSubstring("unknown flag"))
