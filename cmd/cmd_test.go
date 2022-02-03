@@ -30,6 +30,28 @@ func TestCmd(t *testing.T) {
 		RootCommand := cmd.Initialize(mocks.scanner, mocks.writer)
 		RootCommand.SetOut(bf)
 		RootCommand.SetErr(bf)
+		RootCommand.SetArgs([]string{"generateranktable"})
+		RootCommand.Execute()
+
+		result := bf.String()
+		g.Expect(result).To(Equal("1. Lions, 3 pts \n2. Snakes, 3 pts \n"))
+	})
+	t.Run("Run the generate command without flags and alias for generateranktable", func(t *testing.T) {
+		g := NewGomegaWithT(t)
+
+		mocks.scanner.EXPECT().ScanFromStdin(gomock.Any()).Return([]*scanmatches.TeamRank{
+			{
+				Team: "Lions",
+				Rank: 3,
+			}, {
+				Team: "Snakes",
+				Rank: 3,
+			}}, nil)
+
+		bf := new(bytes.Buffer)
+		RootCommand := cmd.Initialize(mocks.scanner, mocks.writer)
+		RootCommand.SetOut(bf)
+		RootCommand.SetErr(bf)
 		RootCommand.SetArgs([]string{"grt"})
 		RootCommand.Execute()
 
@@ -52,7 +74,7 @@ func TestCmd(t *testing.T) {
 		RootCommand := cmd.Initialize(mocks.scanner, mocks.writer)
 		RootCommand.SetOut(bf)
 		RootCommand.SetErr(bf)
-		RootCommand.SetArgs([]string{"grt", "--f=matches.txt"})
+		RootCommand.SetArgs([]string{"generateranktable", "--f=matches.txt"})
 		RootCommand.Execute()
 
 		result := bf.String()
@@ -66,7 +88,7 @@ func TestCmd(t *testing.T) {
 		RootCommand := cmd.Initialize(mocks.scanner, mocks.writer)
 		RootCommand.SetOut(bf)
 		RootCommand.SetErr(bf)
-		RootCommand.SetArgs([]string{"grt", "--d=matches.txt"})
+		RootCommand.SetArgs([]string{"generateranktable", "--d=matches.txt"})
 		RootCommand.Execute()
 
 		result := bf.String()
@@ -92,7 +114,7 @@ func TestCmd(t *testing.T) {
 		bf := new(bytes.Buffer)
 		RootCommand.SetOut(bf)
 		RootCommand.SetErr(bf)
-		RootCommand.SetArgs([]string{"grt", "--f=matches.txt", "--o=rankTable.txt"})
+		RootCommand.SetArgs([]string{"generateranktable", "--f=matches.txt", "--o=rankTable.txt"})
 		err := RootCommand.Execute()
 		g.Expect(err).To(BeNil())
 	})

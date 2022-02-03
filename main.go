@@ -7,8 +7,8 @@ import (
 )
 
 func main() {
-	rankTable := scanmatches.NewRankTable()
+	scanner := scanmatches.NewRankTable()
 	writer := writeranktable.NewWriter()
-	root := cmd.Initialize(&rankTable, &writer)
+	root := cmd.Initialize(&scanner, &writer)
 	root.Execute()
 }

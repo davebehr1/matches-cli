@@ -3,7 +3,6 @@ package cmd
 import (
 	"bufio"
 	"fmt"
-	"os"
 
 	"github.com/davebehr1/spanassessment/pkg/scanmatches"
 	"github.com/davebehr1/spanassessment/pkg/writeranktable"
@@ -30,7 +29,7 @@ func NewGenerateRankTableCmd(scan scanmatches.ScanMatches, write writeranktable.
 					return err
 				}
 			} else {
-				matches, err = scan.ScanFromStdin(bufio.NewReader(os.Stdin))
+				matches, err = scan.ScanFromStdin(bufio.NewReader(cmd.InOrStdin()))
 				if err != nil {
 					return err
 				}
