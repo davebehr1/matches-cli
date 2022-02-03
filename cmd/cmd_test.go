@@ -35,7 +35,7 @@ func TestCmd(t *testing.T) {
 		g.Expect(err).To(BeNil())
 
 		result := bf.String()
-		g.Expect(result).To(Equal("1. Lions, 3 pts \n2. Snakes, 3 pts \n"))
+		g.Expect(result).To(Equal("1. Lions, 3 pts\n2. Snakes, 3 pts"))
 	})
 	t.Run("Run the generate command without flags and alias for generateranktable", func(t *testing.T) {
 		g := NewGomegaWithT(t)
@@ -58,7 +58,7 @@ func TestCmd(t *testing.T) {
 		g.Expect(err).To(BeNil())
 
 		result := bf.String()
-		g.Expect(result).To(Equal("1. Lions, 3 pts \n2. Snakes, 3 pts \n"))
+		g.Expect(result).To(Equal("1. Lions, 3 pts\n2. Snakes, 3 pts"))
 	})
 	t.Run("Run the generate command with file flag", func(t *testing.T) {
 		g := NewGomegaWithT(t)
@@ -81,7 +81,7 @@ func TestCmd(t *testing.T) {
 		g.Expect(err).To(BeNil())
 
 		result := bf.String()
-		g.Expect(result).To(Equal("1. Lions, 3 pts \n2. Snakes, 3 pts \n"))
+		g.Expect(result).To(Equal("1. Lions, 3 pts\n2. Snakes, 3 pts"))
 	})
 
 	t.Run("Run the generate command with incorrect flags", func(t *testing.T) {

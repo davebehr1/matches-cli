@@ -3,6 +3,7 @@ package cmd
 import (
 	"bufio"
 	"fmt"
+	"strings"
 
 	"github.com/davebehr1/spanassessment/pkg/scanmatches"
 	"github.com/davebehr1/spanassessment/pkg/writeranktable"
@@ -34,9 +35,10 @@ func NewGenerateRankTableCmd(scan scanmatches.ScanMatches, write writeranktable.
 					return err
 				}
 			}
-			var finalRankTable string
+
+			finalRankTable := []string{}
 			for index, team := range matches {
-				finalRankTable += fmt.Sprintf("%v. %s, %d pts \n", index+1, team.Team, team.Rank)
+				finalRankTable = append(finalRankTable, fmt.Sprintf("%v. %s, %d pts", index+1, team.Team, team.Rank))
 			}
 
 			if cmd.Flags().Changed("o") {
@@ -44,13 +46,13 @@ func NewGenerateRankTableCmd(scan scanmatches.ScanMatches, write writeranktable.
 				if err != nil {
 					return err
 				}
-				err = write.WriteToFile(outputFilePath, finalRankTable)
+				err = write.WriteToFile(outputFilePath, strings.Join(finalRankTable, "\n"))
 				if err != nil {
 					return err
 				}
 			} else {
 
-				_, err = fmt.Fprint(cmd.OutOrStdout(), finalRankTable)
+				_, err = fmt.Fprint(cmd.OutOrStdout(), strings.Join(finalRankTable, "\n"))
 				if err != nil {
 					return err
 				}

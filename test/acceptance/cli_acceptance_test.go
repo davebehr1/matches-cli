@@ -27,8 +27,11 @@ func TestGenerateRankTableCli(t *testing.T) {
 		err := RootCommand.Execute()
 		g.Expect(err).To(BeNil())
 
-		result := bf.String()
-		g.Expect(result).To(Equal("1. Lions, 11 pts \n2. Tarantulas, 6 pts \n3. FC Awesome, 1 pts \n4. Snakes, 1 pts \n5. Cheetahs, 0 pts \n6. Grouches, 0 pts \n7. Pumas, 0 pts \n1. Lions, 22 pts \n2. Tarantulas, 12 pts \n3. FC Awesome, 2 pts \n4. Snakes, 2 pts \n5. Cheetahs, 0 pts \n6. Grouches, 0 pts \n7. Pumas, 0 pts \n"))
+		newBf := bytes.ReplaceAll(bf.Bytes(), []byte("\n"), []byte(" "))
+
+		result := string(newBf[:])
+
+		g.Expect(result).To(Equal("1. Lions, 11 pts 2. Tarantulas, 6 pts 3. FC Awesome, 1 pts 4. Snakes, 1 pts 5. Cheetahs, 0 pts 6. Grouches, 0 pts 7. Pumas, 0 pts"))
 	})
 	t.Run("Run cli with file input and file output", func(t *testing.T) {
 		g := NewGomegaWithT(t)
@@ -77,7 +80,7 @@ func TestGenerateRankTableCli(t *testing.T) {
 		g.Expect(err).To(BeNil())
 
 		result := bf.String()
-		g.Expect(result).To(Equal("1. Lions, 3 pts \n2. Cheetahs, 0 pts \n"))
+		g.Expect(result).To(Equal("1. Lions, 3 pts\n2. Cheetahs, 0 pts"))
 	})
 	t.Run("Run cli with user input and file output", func(t *testing.T) {
 		g := NewGomegaWithT(t)

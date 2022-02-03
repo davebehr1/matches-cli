@@ -48,7 +48,9 @@ func (rankTable *RankTable) ScanFromFile(filePath string) ([]*TeamRank, error) {
 
 	for _, line := range text {
 		err := rankTable.Process(line)
-		return nil, err
+		if err != nil {
+			return nil, err
+		}
 
 	}
 
