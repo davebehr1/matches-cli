@@ -2,6 +2,8 @@
 
 [![Test](https://github.com/davebehr1/spanassessment/actions/workflows/test.yml/badge.svg)](https://github.com/davebehr1/spanassessment/actions/workflows/test.yml)
 
+[![Lint](https://github.com/davebehr1/spanassessment/actions/workflows/lint.yml/badge.svg?branch=master)](https://github.com/davebehr1/spanassessment/actions/workflows/lint.yml)
+
 
 ```
 This simple cli is used to load match results via a file or stdin to generate a rank table.
