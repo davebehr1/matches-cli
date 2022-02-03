@@ -1,6 +1,6 @@
 # spanassessment
 
-[![Test](https://github.com/davebehr1/spanassessment/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/davebehr1/spanassessment/actions/workflows/test.yml)
+[![Test](https://github.com/davebehr1/spanassessment/actions/workflows/test.yml/badge.svg)](https://github.com/davebehr1/spanassessment/actions/workflows/test.yml)
 
 
 ```
