@@ -1,4 +1,4 @@
-# spanassessment
+# Matches-cli
 
 [![Test](https://github.com/davebehr1/spanassessment/actions/workflows/test.yml/badge.svg)](https://github.com/davebehr1/spanassessment/actions/workflows/test.yml)
 
